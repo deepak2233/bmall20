@@ -1,0 +1,31 @@
+# Configuration for the Install Prediction Model training pipeline.
+# Every value here is loaded into the typed dataclasses in ipm/config.py.
+
+data:
+  # Point this at the real dataset.parquet, or at a synthetic sample produced by
+  # scripts/generate_synthetic_data.py. CSV is also accepted.
+  path: data/sample.parquet
+  valid_fraction: 0.15   # most-recent 15% (by time) used for early stopping
+  test_fraction: 0.15    # final 15% (by time) held out for reporting
+  max_rows: 0            # 0 = use all rows
+
+model:
+  n_estimators: 300
+  learning_rate: 0.05
+  num_leaves: 63
+  max_depth: -1
+  min_child_samples: 100
+  subsample: 0.8
+  colsample_bytree: 0.8
+  reg_lambda: 1.0
+  random_state: 42
+  # false -> train on natural distribution for calibrated P(install) (recommended
+  # for bidding). true -> scale_pos_weight = n_neg/n_pos (recall-oriented).
+  balance_classes: false
+
+train:
+  experiment_name: install-prediction-model
+  run_name: ipm-lightgbm
+  output_dir: artifacts
+  onnx_opset: 17
+  early_stopping_rounds: 50

@@ -1,0 +1,20 @@
+# Data is private (per the assignment) — never commit it.
+data/
+*.parquet
+*.csv
+!tests/**/*.csv
+
+# Artifacts & experiment tracking
+artifacts/
+mlruns/
+mlartifacts/
+mlflow.db
+*.onnx
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+.venv/
+venv/
